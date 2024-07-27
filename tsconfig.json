@@ -1,0 +1,22 @@
+{
+    "compileOnSave": true,
+    "compilerOptions": {
+        "strict": true,
+        "outDir": "dist",
+        "module": "CommonJS",
+        "allowJs": false,
+        "target": "ES2021",
+        "moduleResolution": "Node",
+        "esModuleInterop": true,
+        "allowUnreachableCode": true,
+        "noUnusedParameters": true,
+        "noUnusedLocals": true,
+        "noImplicitReturns": true,
+        "noImplicitAny": true
+    },
+    "include": ["./**/*.ts"],
+    "exclude": [
+        "dist",
+        "node_modules"
+    ]
+}

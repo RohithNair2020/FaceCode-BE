@@ -2,11 +2,11 @@ import express from 'express';
 const router = express.Router();
 
 /* GET home page. */
-router.get('/', (req, res) => {
+router.get('/', (_req, res) => {
   res.send('Welcome to Facecode');
 });
 
-router.get('/ping', (req, res) => {
+router.get('/ping', (_req, res) => {
   const status = {
     port: process.env.PORT || 8081,
     status: true

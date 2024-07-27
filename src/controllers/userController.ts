@@ -1,5 +1,7 @@
+import { Request, Response } from 'express';
+
 // Gets all the users
-export const getUsers = (req, res) => {
+export const getUsers = (_req: Request, res: Response) => {
     const dummyUser = {
         name: 'Rohith',
         age: 24
@@ -9,10 +11,14 @@ export const getUsers = (req, res) => {
 
 
 // Gets a user by the id
-export const getUserById = (req, res) => {
+export const getUserById = (req: Request, res: Response) => {
     const { id } = req.params;
     const { email } = req.query;
     res.json({ id, email });
 }
+
+// Filter users
+// Update user
+// Delete user
 
 
