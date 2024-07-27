@@ -5,13 +5,12 @@ import logger from './winston';
 import morganConfig from './morgan-config';
 import appRouter from './routes/appRouter';
 import userRouter from './routes/userRouter';
-import verifyBody from './middlewares/verifyBody';
 
 // Creating an express app
 const app: Express = express();
 
-app.use(verifyBody); // Do not move this down
-app.use(express.json()); // express middleware for parsing the incoming requests
+app.use(express.json({ type: "application/json" })); // express middleware for parsing the incoming requests
+app.use(express.urlencoded({ extended: true })); // parse application/x-www-form-urlencoded
 app.use(morganConfig);   // For server logs
 
 // Setting the routes

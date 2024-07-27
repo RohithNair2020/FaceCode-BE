@@ -8,9 +8,12 @@ const prisma = new PrismaClient();
 export const createUser = async (req: Request, res: Response) => {
     try {
         const { name, email } = req.body;
-        if(!name || !email) {
-            logger.error('Name and Email required for creating user');
-            res.status(400).json({ status: false, error: "Name and Email required for creating user" });
+        if (!name || !email) {
+            logger.error("Name and Email required for creating user");
+            res.status(400).json({
+                status: false,
+                error: "Name and Email required for creating user",
+            });
         }
 
         const userData: { name: string; email: string } = {
@@ -18,13 +21,20 @@ export const createUser = async (req: Request, res: Response) => {
             email,
         };
 
-        await prisma.user.create({
-            data: userData,
-        });
-
-        res.json({ status: true, name });
+        const existingUser = await prisma.user.findUnique({ where: userData });
+        if (existingUser) {
+            res.status(409).json({
+                status: false,
+                error: "User already exists",
+            });
+        } else {
+            await prisma.user.create({
+                data: userData,
+            });
+            res.status(201).json({ status: true, name });
+        }
     } catch (error) {
-        res.status(404).json({ status: false, error });
+        res.status(400).json({ status: false, error });
     }
 };
 
