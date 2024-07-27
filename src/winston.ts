@@ -13,7 +13,6 @@ const logFormat = combine(
     printf((info: any) => `[${info.timestamp}] ${info.level}: ${info.message}`),
 );
 
-console.log(process.env.LOG_LEVEL);
 const logger = createLogger({
     level: process.env.LOG_LEVEL || "info",
     format: combine(logFormat),
