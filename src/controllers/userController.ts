@@ -4,7 +4,7 @@ import logger from "../winston";
 
 const prisma = new PrismaClient();
 
-// Create user
+// This will create a user
 export const createUser = async (req: Request, res: Response) => {
     try {
         const { name, email } = req.body;
@@ -38,7 +38,7 @@ export const createUser = async (req: Request, res: Response) => {
     }
 };
 
-// Gets all the users
+// This will get all the users
 export const getUsers = async (_req: Request, res: Response) => {
     try {
         const allUsers = await prisma.user.findMany();
@@ -48,7 +48,7 @@ export const getUsers = async (_req: Request, res: Response) => {
     }
 };
 
-// Gets a user by the id
+// This will get a single user
 export const getUserById = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
@@ -63,6 +63,8 @@ export const getUserById = async (req: Request, res: Response) => {
     }
 };
 
-// Filter users
-// Update user
-// Delete user
+// This will update a user
+export const updateUser = (req: Request, res: Response) => {};
+
+// This will delete a user
+export const deleteUser = (req: Request, res: Response) => {};

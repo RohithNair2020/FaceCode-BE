@@ -1,0 +1,27 @@
+import express from "express";
+import {
+    getRooms,
+    createRoom,
+    getRoom,
+    updateRoom,
+    deleteRoom,
+} from "../controllers/roomController";
+
+const router = express.Router();
+
+// CREATE a room
+router.post("/", createRoom);
+
+// GET all rooms
+router.get("/", getRooms);
+
+// GET a single room
+router.get("/:id", getRoom);
+
+// UPDATE a room
+router.put("/:id", updateRoom);
+
+// DELETE a room
+router.delete("/:id", deleteRoom);
+
+export default router;
