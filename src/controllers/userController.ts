@@ -1,40 +1,28 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Prisma } from "@prisma/client";
 import { Request, Response } from "express";
-import logger from "../winston";
+import { exceptionHandler } from "../handlers/exceptionHandler";
+// import logger from "../winston";
 
 const prisma = new PrismaClient();
 
 // This will create a user
 export const createUser = async (req: Request, res: Response) => {
+    const { name, email, phone } = req.body;
+    const data: Prisma.UserCreateInput = {
+        name,
+        email,
+        phone,
+    };
+
     try {
-        const { name, email } = req.body;
-        if (!name || !email) {
-            logger.error("Name and Email required for creating user");
-            res.status(400).json({
-                status: false,
-                error: "Name and Email required for creating user",
-            });
-        }
-
-        const userData: { name: string; email: string } = {
-            name,
-            email,
-        };
-
-        const existingUser = await prisma.user.findUnique({ where: userData });
-        if (existingUser) {
-            res.status(409).json({
-                status: false,
-                error: "User already exists",
-            });
-        } else {
-            await prisma.user.create({
-                data: userData,
-            });
-            res.status(201).json({ status: true, name });
-        }
+        await prisma.user.create({ data });
+        res.status(201).json({ status: true, name });
     } catch (error) {
-        res.status(400).json({ status: false, error });
+        const exception = exceptionHandler(error as { code: string });
+        res.status(exception.statusCode).json({
+            status: false,
+            error: exception.message,
+        });
     }
 };
 
@@ -64,7 +52,7 @@ export const getUserById = async (req: Request, res: Response) => {
 };
 
 // This will update a user
-export const updateUser = (req: Request, res: Response) => {};
+export const updateUser = (_req: Request, _res: Response) => {};
 
 // This will delete a user
-export const deleteUser = (req: Request, res: Response) => {};
+export const deleteUser = (_req: Request, _res: Response) => {};
