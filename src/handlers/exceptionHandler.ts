@@ -1,3 +1,5 @@
+import { Response } from "express";
+
 type ExceptionDetail = {
     message: string;
     statusCode: number;
@@ -34,7 +36,15 @@ const exceptions: Record<string, ExceptionDetail> = {
     },
 };
 
-export const exceptionHandler = (error: { code: string }): ExceptionDetail => {
+export const handleException = (res: Response, e: any) => {
+    const exception = exceptionHandler(e);
+    res.status(exception.statusCode).json({
+        status: false,
+        error: exception.message,
+    });
+};
+
+const exceptionHandler = (error: { code: string }): ExceptionDetail => {
     const defaultException = {
         message: "Something went wrong",
         statusCode: 500,
