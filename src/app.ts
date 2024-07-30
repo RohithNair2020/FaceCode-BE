@@ -5,6 +5,7 @@ import logger from './winston';
 import morganConfig from './morgan-config';
 import appRouter from './routes/appRouter';
 import userRouter from './routes/userRouter';
+import roomRouter from './routes/roomRouter'
 
 // Creating an express app
 const app: Express = express();
@@ -16,6 +17,7 @@ app.use(morganConfig);   // For server logs
 // Setting the routes
 app.use('/api', appRouter);
 app.use('/api/users', userRouter);
+app.use('/api/rooms', roomRouter);
 
 const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {
