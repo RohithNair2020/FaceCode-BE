@@ -1,9 +1,10 @@
-import { PrismaClient, Prisma } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { Request, Response } from "express";
-import { exceptionHandler } from "../handlers/exceptionHandler";
-// import logger from "../winston";
+import { handleException } from "../handlers/exceptionHandler";
+import { PrismaClientInstance } from "../modules/prismaClient";
+import handleSuccess from "../handlers/successHandler";
 
-const prisma = new PrismaClient();
+const prisma = PrismaClientInstance.getClient();
 
 // This will create a user
 export const createUser = async (req: Request, res: Response) => {
@@ -15,24 +16,20 @@ export const createUser = async (req: Request, res: Response) => {
     };
 
     try {
-        await prisma.user.create({ data });
-        res.status(201).json({ status: true, name });
-    } catch (error) {
-        const exception = exceptionHandler(error as any);
-        res.status(exception.statusCode).json({
-            status: false,
-            error: exception.message,
-        });
+        const user = await prisma.user.create({ data });
+        handleSuccess(res, 201, user);
+    } catch (error: any) {
+        handleException(res, error);
     }
 };
 
 // This will get all the users
 export const getUsers = async (_req: Request, res: Response) => {
     try {
-        const allUsers = await prisma.user.findMany();
-        res.json(allUsers);
-    } catch (error) {
-        res.status(404).json({ status: false, error });
+        const data = await prisma.user.findMany();
+        handleSuccess(res, 200, data);
+    } catch (error: any) {
+        handleException(res, error);
     }
 };
 
@@ -45,9 +42,9 @@ export const getUserById = async (req: Request, res: Response) => {
             where: { id: parseInt(id) },
         });
 
-        res.json(user);
-    } catch (error) {
-        res.status(404).json({ status: false, error });
+        handleSuccess(res, 200, { id: user?.id });
+    } catch (error: any) {
+        handleException(res, error);
     }
 };
 
@@ -58,13 +55,9 @@ export const updateUser = async (req: Request, res: Response) => {
         const userId = req.params.id;
 
         await prisma.user.update({ where: { id: Number(userId) }, data });
-        res.status(201).json({ status: true });
-    } catch (e) {
-        const exception = exceptionHandler(e as any);
-        res.status(exception.statusCode).json({
-            status: false,
-            error: exception.message,
-        });
+        handleSuccess(res, 201);
+    } catch (error: any) {
+        handleException(res, error);
     }
 };
 
@@ -74,12 +67,8 @@ export const deleteUser = async (req: Request, res: Response) => {
         const { id } = req.params;
 
         await prisma.user.delete({ where: { id: Number(id) } });
-        res.status(201).json({ status: true });
-    } catch (e) {
-        const exception = exceptionHandler(e as any);
-        res.status(exception.statusCode).json({
-            status: false,
-            error: exception.message,
-        });
+        handleSuccess(res, 204);
+    } catch (error: any) {
+        handleException(res, error);
     }
 };
