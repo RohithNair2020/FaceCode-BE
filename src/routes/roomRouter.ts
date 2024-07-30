@@ -19,7 +19,7 @@ router.get("/", getRooms);
 router.get("/:id", getRoom);
 
 // UPDATE a room
-router.put("/:id", updateRoom);
+router.patch("/:id", updateRoom);
 
 // DELETE a room
 router.delete("/:id", deleteRoom);
