@@ -6,6 +6,7 @@ import morganConfig from './morgan-config';
 import appRouter from './routes/appRouter';
 import userRouter from './routes/userRouter';
 import roomRouter from './routes/roomRouter'
+import roommateRouter from './routes/roommateRouter';
 
 // Creating an express app
 const app: Express = express();
@@ -18,6 +19,7 @@ app.use(morganConfig);   // For server logs
 app.use('/api', appRouter);
 app.use('/api/users', userRouter);
 app.use('/api/rooms', roomRouter);
+app.use('/api/roommates', roommateRouter);
 
 const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {

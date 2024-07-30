@@ -54,9 +54,21 @@ export const updateRoom = async (req: Request, res: Response) => {
 export const deleteRoom = async (req: Request, res: Response) => {
     try {
         const roomId = req.params.id;
-        await prisma.room.delete({ where: { id: roomId }});
+        await prisma.room.delete({ where: { id: roomId } });
         handleSuccess(res, 204);
-    } catch(error) {
+    } catch (error) {
+        handleException(res, error);
+    }
+};
+
+// This will get all the roommates assigned to a room
+export const getRoomRoommates = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+
+        const data = await prisma.roommate.findMany({ where: { roomId: id } });
+        handleSuccess(res, 200, data);
+    } catch (error) {
         handleException(res, error);
     }
 };

@@ -72,3 +72,16 @@ export const deleteUser = async (req: Request, res: Response) => {
         handleException(res, error);
     }
 };
+
+// This will get all the rooms the user is part of
+export const getUserRooms = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const data = await prisma.roommate.findMany({
+            where: { userId: Number(id) },
+        });
+        handleSuccess(res, 200, data);
+    } catch (error) {
+        handleException(res, error);
+    }
+};

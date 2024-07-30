@@ -3,6 +3,7 @@ import {
     createUser,
     deleteUser,
     getUserById,
+    getUserRooms,
     getUsers,
     updateUser,
 } from "../controllers/userController";
@@ -22,5 +23,8 @@ router.patch("/:id", updateUser);
 
 // DELETE a user
 router.delete("/:id", deleteUser);
+
+// GET all the rooms of the user
+router.get("/:id/rooms", getUserRooms);
 
 export default router;

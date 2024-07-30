@@ -5,6 +5,7 @@ import {
     getRoom,
     updateRoom,
     deleteRoom,
+    getRoomRoommates,
 } from "../controllers/roomController";
 
 const router = express.Router();
@@ -23,5 +24,8 @@ router.patch("/:id", updateRoom);
 
 // DELETE a room
 router.delete("/:id", deleteRoom);
+
+// GET all roommates assigned to a room
+router.get('/:id/roommates', getRoomRoommates);
 
 export default router;
