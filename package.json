@@ -5,7 +5,8 @@
     "scripts": {
         "start": "node dist/app.js",
         "start:dev": "ts-node-dev --respawn --notify false --prefer-ts --ignore-watch ./node_modules -- src/app.ts ",
-        "build": "tsc"
+        "build": "tsc",
+        "prisma-format": "npx prisma format"
     },
     "dependencies": {
         "@prisma/client": "^5.17.0",

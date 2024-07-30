@@ -20,6 +20,7 @@ model User {
   phone    String     @unique
   UserInfo UserInfo?
   Roommate Roommate[]
+  Room     Room[]
 
   @@map("users")
 }
@@ -39,6 +40,9 @@ model Room {
   description String?
   createdAt   DateTime   @default(now())
   lastActive  DateTime   @default(now())
+  scheduledAt DateTime
+  createdUser User       @relation(fields: [createdBy], references: [id])
+  createdBy   Int
   Roommate    Roommate[]
 
   @@map("rooms")
