@@ -24,9 +24,16 @@ export const createUser = async (req: Request, res: Response) => {
 };
 
 // This will get all the users
-export const getUsers = async (_req: Request, res: Response) => {
+export const getUsers = async (req: Request, res: Response) => {
     try {
-        const data = await prisma.user.findMany();
+        const filters: Record<string, any> = {};
+        const queryParams = req.query;
+
+        Object.keys(queryParams).forEach((key) => {
+            if (queryParams[key] != null) filters[key] = queryParams[key];
+        });
+
+        const data = await prisma.user.findMany({ where: filters });
         handleSuccess(res, 200, data);
     } catch (error: any) {
         handleException(res, error);

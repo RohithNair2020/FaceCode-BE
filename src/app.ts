@@ -1,4 +1,5 @@
 import express, { Express } from 'express';
+import cors from 'cors';
 import { config } from 'dotenv';
 config(); // Don't move this down. This initializes the env variables
 import logger from './winston';
@@ -11,6 +12,9 @@ import roommateRouter from './routes/roommateRouter';
 // Creating an express app
 const app: Express = express();
 
+app.use(cors({
+  origin: ['http://localhost:5173']
+}));
 app.use(express.json({ type: "application/json" })); // express middleware for parsing the incoming requests
 app.use(express.urlencoded({ extended: true })); // parse application/x-www-form-urlencoded
 app.use(morganConfig);   // For server logs
