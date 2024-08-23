@@ -9,7 +9,7 @@ import userRouter from './routes/userRouter';
 import roomRouter from './routes/roomRouter'
 import roommateRouter from './routes/roommateRouter';
 
-// Creating an express app
+// Creating an express app and it's crucial to 
 const app: Express = express();
 
 app.use(cors({
@@ -27,5 +27,9 @@ app.use('/api/roommates', roommateRouter);
 
 const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {
-  logger.info(`🚀 Server listening at PORT :: ${PORT}`);
+  logger.info(`🚀 App server listening at PORT :: ${PORT}`);
 });
+import './controllers/roomSocket';
+
+
+

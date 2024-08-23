@@ -19,11 +19,11 @@ export const createRoommate = async (req: Request, res: Response) => {
         });
 
         if (existingRoommates && existingRoommates.length) {
-            handleSuccess(res, 201, { id: existingRoommates[0].id });
+            handleSuccess(res, 201, { roommate: existingRoommates[0] });
         } else {
             const data: Prisma.RoommateCreateInput = req.body;
             const roommate = await prisma.roommate.create({ data });
-            handleSuccess(res, 201, { id: roommate.id });
+            handleSuccess(res, 201, { roommate });
         }
     } catch (error) {
         handleException(res, error);
