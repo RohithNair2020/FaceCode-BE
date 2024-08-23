@@ -9,18 +9,31 @@ const prisma = PrismaClientInstance.getClient();
 // This will create a roommate
 export const createRoommate = async (req: Request, res: Response) => {
     try {
-        const data: Prisma.RoommateCreateInput = req.body;
-        const roommate = await prisma.roommate.create({ data });
-        handleSuccess(res, 201, { id: roommate.id });
+        const roommateQuery: Prisma.RoommateWhereInput = req.body;
+
+        const existingRoommates = await prisma.roommate.findMany({
+            where: {
+                roomId: roommateQuery.roomId,
+                userId: roommateQuery.userId,
+            },
+        });
+
+        if (existingRoommates && existingRoommates.length) {
+            handleSuccess(res, 201, { id: existingRoommates[0].id });
+        } else {
+            const data: Prisma.RoommateCreateInput = req.body;
+            const roommate = await prisma.roommate.create({ data });
+            handleSuccess(res, 201, { id: roommate.id });
+        }
     } catch (error) {
         handleException(res, error);
     }
 };
 
 // This will get all the roommates
-export const getRoommates = (_req: Request, res: Response) => {
+export const getRoommates = async (_req: Request, res: Response) => {
     try {
-        const roommates = prisma.roommate.findMany();
+        const roommates = await prisma.roommate.findMany();
         handleSuccess(res, 200, roommates);
     } catch (error) {
         handleException(res, error);
@@ -28,10 +41,10 @@ export const getRoommates = (_req: Request, res: Response) => {
 };
 
 // This will get a single roommate
-export const getRoommate = (req: Request, res: Response) => {
+export const getRoommate = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const data = prisma.roommate.findUnique({ where: { id } });
+        const data = await prisma.roommate.findUnique({ where: { id } });
         handleSuccess(res, 200, data);
     } catch (error) {
         handleException(res, error);
