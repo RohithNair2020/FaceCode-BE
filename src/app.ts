@@ -13,7 +13,7 @@ import roommateRouter from './routes/roommateRouter';
 const app: Express = express();
 
 app.use(cors({
-  origin: ['http://localhost:5173']
+  origin: [process.env.CLIENT_URL || '*']
 }));
 app.use(express.json({ type: "application/json" })); // express middleware for parsing the incoming requests
 app.use(express.urlencoded({ extended: true })); // parse application/x-www-form-urlencoded
