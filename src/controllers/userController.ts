@@ -8,13 +8,7 @@ const prisma = PrismaClientInstance.getClient();
 
 // This will create a user
 export const createUser = async (req: Request, res: Response) => {
-    const { name, email, phone } = req.body;
-    const data: Prisma.UserCreateInput = {
-        name,
-        email,
-        phone,
-    };
-
+    const data: Prisma.UserCreateInput = req.body;
     try {
         const user = await prisma.user.create({ data });
         handleSuccess(res, 201, user);

@@ -54,6 +54,7 @@ model Room {
   scheduledAt DateTime   @default(now())
   createdUser User       @relation(fields: [createdBy], references: [id])
   createdBy   Int
+  Roommate    Roommate[]
 
   @@map("rooms")
 }
