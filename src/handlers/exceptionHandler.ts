@@ -1,4 +1,5 @@
 import { Response } from "express";
+import logger from "../winston";
 
 type ExceptionDetail = {
     message: string;
@@ -38,6 +39,7 @@ const exceptions: Record<string, ExceptionDetail> = {
 
 export const handleException = (res: Response, e: any) => {
     const exception = exceptionHandler(e);
+    logger.error(e);
     res.status(exception.statusCode).json({
         status: false,
         error: exception.message,
