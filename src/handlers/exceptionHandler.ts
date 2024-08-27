@@ -43,6 +43,7 @@ export const handleException = (res: Response, e: any) => {
     res.status(exception.statusCode).json({
         status: false,
         error: exception.message,
+        errorDetails: e
     });
 };
 
