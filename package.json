@@ -6,7 +6,9 @@
         "start": "node dist/app.js",
         "start:dev": "ts-node-dev --respawn --notify false --prefer-ts --ignore-watch ./node_modules -- src/app.ts ",
         "build": "tsc",
-        "prisma-format": "npx prisma format"
+        "prisma-format": "npx prisma format",
+        "prisma-migrate-reset": "npx prisma migrate reset",
+        "prisma-migrate-dev": "npx prisma migrate dev"
     },
     "dependencies": {
         "@prisma/client": "^5.17.0",
