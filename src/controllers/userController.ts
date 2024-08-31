@@ -43,7 +43,7 @@ export const getUserById = async (req: Request, res: Response) => {
             where: { id: parseInt(id) },
         });
 
-        handleSuccess(res, 200, { id: user?.id });
+        handleSuccess(res, 200, user);
     } catch (error: any) {
         handleException(res, error);
     }
