@@ -8,6 +8,7 @@ import appRouter from "./routes/appRouter";
 import userRouter from "./routes/userRouter";
 import roomRouter from "./routes/roomRouter";
 import roommateRouter from "./routes/roommateRouter";
+import codeRouter from "./routes/codeRouter";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import RoomService from "./services/RoomService";
@@ -29,6 +30,7 @@ app.use("/api", appRouter);
 app.use("/api/users", userRouter);
 app.use("/api/rooms", roomRouter);
 app.use("/api/roommates", roommateRouter);
+app.use("/api/code", codeRouter);
 
 // Creating websocket
 const server = createServer(app);
