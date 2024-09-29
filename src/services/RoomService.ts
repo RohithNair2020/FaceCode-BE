@@ -18,6 +18,7 @@ class RoomService {
 
                 this._createRoom(roomId)._addRoommate(roomId, {
                     userId: roommate.userId,
+                    userInfo: roommate.userInfo
                 });
                 roomSocket.join(roomId);
 
